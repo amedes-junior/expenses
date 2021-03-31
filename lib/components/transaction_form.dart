@@ -23,6 +23,9 @@ class _TransactionFormState extends State<TransactionForm> {
     }
 
     widget.onSubmit(title, value);
+
+    titleController.text = "";
+    valueController.text = "0.0";
   }
 
   @override
@@ -51,10 +54,9 @@ class _TransactionFormState extends State<TransactionForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                FlatButton(
+                TextButton(
                   child: Text('Nova Transação'),
-                  textColor: Colors.purple,
-                  onPressed: _submitForm,
+                  onPressed:  _submitForm(),
                 ),
               ],
             ),
