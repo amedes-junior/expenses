@@ -18,16 +18,13 @@ class ExpensesApp extends StatelessWidget {
         accentColor: Colors.amber,
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: TextStyle(
-                fontFamily: 'Opensans',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-              button: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold
-              )
+            headline6: TextStyle(
+              fontFamily: 'Opensans',
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
+            button:
+                TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
                 headline6: TextStyle(
@@ -49,7 +46,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-     Transaction(
+    Transaction(
       id: 't0',
       title: 'Conta Antiga',
       value: 400.00,
@@ -67,25 +64,25 @@ class _MyHomePageState extends State<MyHomePage> {
       value: 211.30,
       date: DateTime.now().subtract(Duration(days: 5)),
     ),
-     Transaction(
+    Transaction(
       id: 't3',
       title: 'Cartão de Crédito',
       value: 456.78,
       date: DateTime.now().subtract(Duration(days: 4)),
     ),
-     Transaction(
+    Transaction(
       id: 't4',
       title: 'Lanche',
       value: 111.30,
       date: DateTime.now().subtract(Duration(days: 3)),
     ),
-     Transaction(
+    Transaction(
       id: 't5',
       title: 'Monitor',
       value: 543.30,
       date: DateTime.now().subtract(Duration(days: 2)),
     ),
-     Transaction(
+    Transaction(
       id: 't6',
       title: 'CAGECE',
       value: 145.78,
@@ -101,9 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
-      return tr.date.isAfter(DateTime.now().subtract(
-        Duration(days: 7)
-      ));
+      return tr.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
     }).toList();
   }
 
@@ -137,22 +132,32 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text('Depesas Pessoais'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => _openTransactionFormModal(context),
+        )
+      ],
+    );
+
+    final availableHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Depesas Pessoais'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _openTransactionFormModal(context),
-          )
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionList(_transactions, _removeTransaction),
+            Container(
+                height: availableHeight * 0.3,
+                child: Chart(_recentTransactions)),
+            Container(
+                height: availableHeight * 0.7,
+                child: TransactionList(_transactions, _removeTransaction)),
           ],
         ),
       ),

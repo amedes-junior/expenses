@@ -11,7 +11,6 @@ class TransactionForm extends StatefulWidget {
 }
 
 class _TransactionFormState extends State<TransactionForm> {
-
   final _titleController = TextEditingController();
   final _valueController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
@@ -20,7 +19,7 @@ class _TransactionFormState extends State<TransactionForm> {
     final title = _titleController.text;
     final value = double.tryParse(_valueController.text) ?? 0.0;
 
-    if (title.isEmpty || value <= 0|| _selectedDate == null) {
+    if (title.isEmpty || value <= 0 || _selectedDate == null) {
       return;
     }
 
@@ -37,13 +36,12 @@ class _TransactionFormState extends State<TransactionForm> {
       firstDate: DateTime(2019),
       lastDate: DateTime.now(),
     ).then((pickedDate) {
-      if (pickedDate == null){
+      if (pickedDate == null) {
         return;
       }
       setState(() {
         _selectedDate = pickedDate;
       });
-
     });
     print('Executado !!!');
   }
@@ -77,7 +75,9 @@ class _TransactionFormState extends State<TransactionForm> {
                 children: [
                   Expanded(
                     child: Text(
-                      _selectedDate == null ?  'Nenhuma Data Selecionada!' : 'Data Selecionanda: ${DateFormat('dd/MM/y').format(_selectedDate)}',
+                      _selectedDate == null
+                          ? 'Nenhuma Data Selecionada!'
+                          : 'Data Selecionanda: ${DateFormat('dd/MM/y').format(_selectedDate)}',
                     ),
                   ),
                   TextButton(
@@ -95,7 +95,7 @@ class _TransactionFormState extends State<TransactionForm> {
               children: <Widget>[
                 ElevatedButton(
                   child: Text('Nova Transação'),
-                  onPressed:  _submitForm,
+                  onPressed: _submitForm,
                 ),
               ],
             ),
