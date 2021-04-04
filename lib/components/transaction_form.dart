@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'adaptative_button.dart';
+import 'adaptative_text_field.dart';
+
 class TransactionForm extends StatefulWidget {
   final void Function(String, double, DateTime) onSubmit;
 
@@ -48,6 +51,8 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
     return SingleChildScrollView(
       child: Card(
         elevation: 5,
@@ -56,24 +61,20 @@ class _TransactionFormState extends State<TransactionForm> {
             top: 10,
             right: 10,
             left: 10,
-            bottom: 10 + MediaQuery.of(context).viewInsets.bottom,
+            bottom: 10 + mediaQuery.viewInsets.bottom,
           ),
           child: Column(
             children: <Widget>[
-              TextField(
+              AdaptativeTextField(
+                label: 'Título',
                 controller: _titleController,
                 onSubmitted: (_) => _submitForm(),
-                decoration: InputDecoration(
-                  labelText: 'Título',
-                ),
               ),
-              TextField(
+              AdaptativeTextField(
+                label: 'Valor R\$',
                 controller: _valueController,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 onSubmitted: (_) => _submitForm(),
-                decoration: InputDecoration(
-                  labelText: 'Valor R\$',
-                ),
               ),
               Container(
                 height: 70,
@@ -99,10 +100,10 @@ class _TransactionFormState extends State<TransactionForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  ElevatedButton(
-                    child: Text('Nova Transação'),
+                  AdaptativeButton(
+                    label: 'Nova Transação',
                     onPressed: _submitForm,
-                  ),
+                  )
                 ],
               ),
             ],
