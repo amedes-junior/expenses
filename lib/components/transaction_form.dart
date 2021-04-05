@@ -1,5 +1,5 @@
+import 'adaptative_date_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'adaptative_button.dart';
 import 'adaptative_text_field.dart';
@@ -32,23 +32,6 @@ class _TransactionFormState extends State<TransactionForm> {
     _valueController.text = "0.0";
   }
 
-  _showDatePicker() {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2019),
-      lastDate: DateTime.now(),
-    ).then((pickedDate) {
-      if (pickedDate == null) {
-        return;
-      }
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    });
-    print('Executado !!!');
-  }
-
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -76,27 +59,34 @@ class _TransactionFormState extends State<TransactionForm> {
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 onSubmitted: (_) => _submitForm(),
               ),
-              Container(
-                height: 70,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        _selectedDate == null
-                            ? 'Nenhuma Data Selecionada!'
-                            : 'Data Selecionanda: ${DateFormat('dd/MM/y').format(_selectedDate)}',
-                      ),
-                    ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        primary: Theme.of(context).primaryColor,
-                      ),
-                      child: Text('Selecionar Data'),
-                      onPressed: _showDatePicker,
-                    )
-                  ],
-                ),
-              ),
+              // Container(
+              //   height: 70,
+              //   child: Row(
+              //     children: [
+              //       Expanded(
+              //         child: Text(
+              //           _selectedDate == null
+              //               ? 'Nenhuma Data Selecionada!'
+              //               : 'Data Selecionanda: ${DateFormat('dd/MM/y').format(_selectedDate)}',
+              //         ),
+              //       ),
+              //       TextButton(
+              //         style: TextButton.styleFrom(
+              //           primary: Theme.of(context).primaryColor,
+              //         ),
+              //         child: Text('Selecionar Data'),
+              //         onPressed: _showDatePicker,
+              //       )
+              //     ],
+              //   ),
+              // ),
+              AdaptativeDatePicker(
+                  selectedDate: _selectedDate,
+                  onDateChanged: (newDate) {
+                    setState(() {
+                      _selectedDate = newDate;
+                    });
+                  }),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
